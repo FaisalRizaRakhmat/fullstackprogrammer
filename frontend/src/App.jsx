@@ -20,10 +20,27 @@ function App() {
     setSelectedValue(event.target.value);
   };
 
-  const [selectedDate, setSelectedDate] = useState('');
+  // const [selectedDate, setSelectedDate] = useState('');
+
+  const [rawDate, setRawDate] = useState('');
+  const [formattedDate, setFormattedDate] = useState('');
 
   const handleDateChange = (event) => {
-    setSelectedDate(event.target.value); // Value will be a "YYYY-MM-DD" string
+    setRawDate(event.target.value); // Value will be a "YYYY-MM-DD" string
+
+    //setRawDate(value);
+
+    if (value) {
+      const dateObj = new Date(value);
+      // Example: Formatting to "DD-MMM-YYYY" (e.g., 13-Aug-2026)
+      const day = dateObj.getDate().toString().padStart(2, '0');
+      const month = dateObj.toLocaleString('default', { month: 'short' });
+      const year = dateObj.getFullYear();
+      
+      setFormattedDate(`${day}-${month}-${year}`);
+    } else {
+      setFormattedDate('');
+    }
   };
 
 
@@ -49,10 +66,10 @@ function App() {
               <input id="flightNumber" type="text" ref={inputRef} placeholder="Input Flight Number" />
               <br/>
 
-              <label htmlFor="flightDate">Select Flight Date: </label>
+              <label htmlFor="flightDate">Flight Date: </label>
               <input type="date" id="flightDate"
                 name="flightDate"
-                value={selectedDate}
+                value={rawDate}
                 onChange={handleDateChange}
               />
               <br/>
