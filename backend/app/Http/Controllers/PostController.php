@@ -6,21 +6,28 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function store(Request $request)
+    public function check(Request $request)
     {
-        // 1. Validate the incoming data
-        $validated = $request->validate([
-            'title' => 'required|max:255',
-            'body' => 'required',
+        $flightNumber = $request->input('flightNumber'); 
+        $date = $request->input('date'); 
+
+        //$allData = $request->all();
+
+        return response()->json([
+            'exists' => true
         ]);
+    }
 
-        // 2. Access variables individually if needed
-        $title = $request->input('title'); 
+    public function generate(Request $request)
+    {
+        $flightNumber = $request->input('flightNumber'); 
+        $date = $request->input('date'); 
 
-        // 3. Process the data (e.g., save to a database or call a model)
-        // Post::create($validated);
+        //$allData = $request->all();
 
-        // 4. Return a response or redirect
-        return redirect('/posts')->with('success', 'Post created successfully!');
+        return response()->json([
+            'success' => true,
+            'seats' => ["3B", "7C", "14D"]
+        ]);
     }
 }
